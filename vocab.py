@@ -22,8 +22,6 @@ import urllib.request
 from collections import Counter
 from pathlib import Path
 
-from wordfreq import zipf_frequency
-
 DATA = Path(__file__).with_name("data")
 REPORTS = Path(__file__).with_name("reports")
 WORDS_FILE = DATA / "words.json"
@@ -192,6 +190,8 @@ def cmd_pdf(args):
 
 
 def cmd_scan(args):
+    from wordfreq import zipf_frequency
+
     text = Path(args.book).read_text(encoding="utf-8", errors="ignore")
     sentences = split_sentences(text)
     tokens = [w.lower() for w in re.findall(r"[A-Za-z]+(?:'[a-z]+)?", text)]

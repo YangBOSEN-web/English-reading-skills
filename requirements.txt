@@ -1,3 +1,4 @@
-wordfreq>=3.0
 pymupdf>=1.24
 genanki>=0.13
+# only needed for "vocab.py scan" (plain-text books)
+wordfreq>=3.0

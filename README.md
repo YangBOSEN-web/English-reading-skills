@@ -3,6 +3,46 @@ Improving English vocabulary through reading.
 
 Read PDF books, highlight what matters, and turn your highlights into flashcards, Anki cards and weekly or monthly summaries.
 
+There are two ways to use it:
+- **📱 Reading Words app**: works in the browser on laptop and iPhone, offline, nothing to install. Share the link with friends.
+- **💻 Python tool** (`vocab.py`): the same idea in the terminal.
+
+---
+
+# 📱 Reading Words app
+
+**Open it:** https://yangbosen-web.github.io/English-reading-skills/
+
+- **Offline**: after the first visit it works with no internet, including the built-in English–Chinese dictionary (48,000 words, English + 中文 meanings, phonetics, and word forms such as *ran → run*).
+- **PDF highlights**: highlight words (1–3 words) and sentences in your PDF, then choose the file in **Add**. Only new highlights are imported.
+- **Paper books**: on iPhone, open the photo of the page, press and hold the text, **Copy**, paste it in **Add**, and tap the words you don't know.
+- **Review**: flashcards with spaced repetition (1, 3, 7, 14, 30 days). Each card shows the sentence from *your* book.
+- **Summary**: this week / month / all time, words you keep missing, your favorite sentences. **Share summary** sends it to a friend.
+- **Cambridge 剑桥词典** button on every word (needs internet).
+- **Anki**: export a CSV with word, English + Chinese meaning and your example sentence.
+- **Private**: words are stored only on your device. Use **More → Make backup** now and then, and **Restore / merge** to move words between laptop and phone (AirDrop works).
+
+### Install on iPhone
+Open the link in **Safari** → **Share** → **Add to Home Screen**. It gets its own icon and opens like a normal app.
+
+For PDFs on iPhone, highlight in an app that saves standard highlights into the file: **Adobe Acrobat Reader** (free), PDF Expert or Xodo.
+(Apple Books and the Files app don't save highlights in a form other apps can read.)
+
+### Publishing the app (one time, for the repo owner)
+1. Repo **Settings → General → Danger Zone → Change visibility → Public**.
+2. Repo **Settings → Pages**: *Source* **Deploy from a branch**, *Branch* **English-reading**, folder **/docs**, **Save**.
+3. After a minute the app is live at https://yangbosen-web.github.io/English-reading-skills/
+
+### For developers
+- The app is plain HTML/JS in `docs/`, no build step. Run it locally with `cd docs && python3 -m http.server`, then open http://localhost:8000.
+- After changing app files, bump `SHELL` in `docs/sw.js` so installed copies update.
+- The dictionary is generated from [ECDICT](https://github.com/skywind3000/ECDICT) (MIT) by `tools/build_dictionary.py`.
+  PDF reading uses [pdf.js](https://mozilla.github.io/pdf.js/) (Apache 2.0), vendored in `docs/vendor/pdfjs`.
+
+---
+
+# 💻 Python tool
+
 ## Setup
 ```bash
 pip install -r requirements.txt

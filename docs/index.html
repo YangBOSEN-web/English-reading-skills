@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reading Words</title>
+<meta name="description" content="Learn English vocabulary from the books you read. Works offline.">
+<meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Reading Words">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root {
+  --bg: #f7f4ee; --surface: #ffffff; --surface-2: #f0ece4; --fg: #1f1d1a; --muted: #6b665d;
+  --line: #e3ddd2; --accent: #2f6f5e; --accent-fg: #ffffff; --accent-soft: #e2efe9;
+  --mark: #fdeca6; --danger: #b4432f; --zh: #8a4b1f;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171614; --surface: #211f1c; --surface-2: #2a2824; --fg: #ece8e0; --muted: #a39d92;
+    --line: #36332e; --accent: #7cc3ad; --accent-fg: #10201b; --accent-soft: #1f332c;
+    --mark: #5c4e14; --danger: #e48b78; --zh: #e0a36f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171614; --surface: #211f1c; --surface-2: #2a2824; --fg: #ece8e0; --muted: #a39d92;
+  --line: #36332e; --accent: #7cc3ad; --accent-fg: #10201b; --accent-soft: #1f332c;
+  --mark: #5c4e14; --danger: #e48b78; --zh: #e0a36f; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 var(--sans); }
+main { max-width: 720px; margin: 0 auto; padding: calc(16px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom)); }
+h1 { font: 700 1.7rem/1.2 var(--serif); margin: 8px 0 4px; }
+h2 { font: 700 1.15rem/1.3 var(--serif); margin: 28px 0 10px; }
+p { margin: 0 0 12px; }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.hidden { display: none !important; }
+
+/* tabs */
+nav.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; justify-content: center;
+  background: var(--surface); background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+nav.tabs a { flex: 1; max-width: 140px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 6px;
+  color: var(--muted); text-decoration: none; font-size: .72rem; }
+nav.tabs a svg { width: 24px; height: 24px; }
+nav.tabs a[aria-current="page"] { color: var(--accent); }
+
+/* building blocks */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.grow { flex: 1; min-width: 0; }
+button, .btn { font: 600 .95rem var(--sans); border-radius: 10px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--fg); padding: 10px 16px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; }
+button.primary, .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+button.ghost { background: transparent; }
+button.danger { color: var(--danger); }
+button:disabled { opacity: .5; cursor: default; }
+input[type=text], input[type=search], input[type=number], textarea {
+  font: 1rem var(--sans); width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--fg); }
+textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+input:focus, textarea:focus, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+label.field { display: block; margin-bottom: 10px; }
+label.field > span { display: block; font-size: .8rem; color: var(--muted); margin-bottom: 4px; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; min-height: 36px; padding: 6px 14px; font-weight: 600; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgb(0 0 0 / .12); }
+
+/* dictionary entry */
+.entry .word { font: 700 1.6rem/1.2 var(--serif); }
+.entry .phon { color: var(--muted); font-size: .95rem; margin-left: 6px; }
+.entry .form { font-size: .85rem; color: var(--muted); margin-top: 2px; }
+.entry .en { white-space: pre-line; margin-top: 10px; }
+.entry .zh { white-space: pre-line; margin-top: 8px; color: var(--zh); }
+.entry .ex { margin-top: 10px; font: italic 1rem/1.5 var(--serif); color: var(--muted); }
+mark, .ex b { background: var(--mark); color: var(--fg); font-style: normal; border-radius: 3px; padding: 0 2px; }
+.cam { font-size: .85rem; min-height: 36px; padding: 6px 12px; }
+
+/* stats */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.tile b { display: block; font: 700 1.6rem/1.1 var(--sans); color: var(--accent); font-variant-numeric: tabular-nums; }
+.tile span { font-size: .8rem; color: var(--muted); }
+.hero { text-align: center; padding: 26px 16px; }
+.hero .big { font: 700 3.2rem/1 var(--sans); color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* lists */
+.list { list-style: none; margin: 0; padding: 0; }
+.list li { border-bottom: 1px solid var(--line); padding: 12px 2px; }
+.list li:last-child { border-bottom: 0; }
+.list .w { font: 700 1.05rem var(--serif); }
+.list .z { color: var(--zh); font-size: .9rem; }
+.list button.item { all: unset; display: block; width: 100%; cursor: pointer; }
+.list button.item:focus-visible { outline: 2px solid var(--accent); }
+.pill { display: inline-block; font-size: .72rem; padding: 2px 8px; border-radius: 99px; background: var(--surface-2); color: var(--muted); }
+blockquote { margin: 0 0 12px; padding: 12px 14px; background: var(--surface); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; font-family: var(--serif); }
+blockquote cite { display: block; margin-top: 6px; font: .8rem var(--sans); color: var(--muted); }
+
+/* import results */
+.pick { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.pick input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); flex: none; }
+.pick .en, .pick .zh { white-space: pre-line; font-size: .9rem; }
+.pick .zh { color: var(--zh); }
+.pick .ctx { font: italic .9rem var(--serif); color: var(--muted); margin-top: 4px; }
+
+/* tap-a-word */
+.tokens { font: 1.15rem/2 var(--serif); }
+.tokens button { all: unset; cursor: pointer; border-radius: 4px; padding: 0 1px; }
+.tokens button[aria-pressed="true"] { background: var(--mark); }
+.tokens button:focus-visible { outline: 2px solid var(--accent); }
+
+/* review */
+.flash { min-height: 300px; display: flex; flex-direction: column; justify-content: center; text-align: center; cursor: pointer; user-select: none; -webkit-user-select: none; }
+.flash .word { font-size: 2.2rem; }
+.flash .ex { font-size: 1.05rem; }
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.answers button { min-height: 54px; font-size: 1.05rem; }
+@media (hover: none) { .kbd { display: none; } }
+.progress { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin: 10px 0 14px; }
+.progress div { height: 100%; background: var(--accent); width: 0; transition: width .25s; }
+
+dialog { border: 0; border-radius: 16px; padding: 0; width: min(560px, calc(100vw - 24px)); background: var(--surface); color: var(--fg); }
+dialog::backdrop { background: rgb(0 0 0 / .45); }
+dialog form { padding: 18px; }
+#toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 20;
+  background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: .9rem; max-width: calc(100vw - 32px);
+  opacity: 0; pointer-events: none; transition: opacity .2s; }
+#toast.show { opacity: 1; }
+.drop { border: 2px dashed var(--line); border-radius: 14px; padding: 22px 16px; text-align: center; }
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+</style>
+</head>
+<body>
+<main id="view" tabindex="-1"></main>
+
+<nav class="tabs" aria-label="Sections">
+  <a href="#today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2"/><path d="M8 7h6"/></svg>Today</a>
+  <a href="#add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Add</a>
+  <a href="#words"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>Words</a>
+  <a href="#summary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Summary</a>
+  <a href="#more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg>More</a>
+</nav>
+
+<dialog id="editor"></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

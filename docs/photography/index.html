@@ -2,144 +2,85 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>光影之间 · 摄影作品集</title>
-<meta name="description" content="个人摄影师作品集：人像、风光、街头与婚礼摄影。">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阿树的相册</title>
+<meta name="description" content="住在长沙，平时拍拍身边的人，也拍拍路过的风景。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600&family=Caveat:wght@500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="wrap">
+  <header>
+    <!-- 名字：改这里和 <title> -->
+    <a class="logo" href="#top" id="top">阿树 <small>photo diary</small></a>
+    <nav aria-label="页面导航">
+      <a href="#album">相册</a>
+      <a href="#about">关于</a>
+      <a href="#contact">约拍</a>
+    </nav>
+  </header>
 
-<header class="nav" id="nav">
-  <a class="brand" href="#top">YANG<span>·</span>STUDIO</a>
-  <button class="menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">
-    <span></span><span></span>
-  </button>
-  <nav class="links" id="links">
-    <a href="#work">作品</a>
-    <a href="#about">关于</a>
-    <a href="#services">服务</a>
-    <a href="#contact">联系</a>
-  </nav>
-</header>
+  <section class="intro">
+    <span class="hand">hi, 我是阿树 ——</span>
+    <h1>平时拍拍<b>身边的人</b>，<br>也拍拍路过的风景。</h1>
+    <p>住在长沙。看到喜欢的光，就按一下快门。</p>
+  </section>
 
-<section class="hero" id="top">
-  <div class="hero-bg" style="background-image:url('https://picsum.photos/id/1018/2000/1300')"></div>
-  <div class="hero-inner">
-    <p class="eyebrow">Photographer · Shanghai</p>
-    <h1>捕捉光影之间<br><em>那些安静的瞬间</em></h1>
-    <p class="lede">人像 · 风光 · 街头 · 婚礼纪实</p>
-    <a class="btn" href="#work">浏览作品</a>
-  </div>
-  <a class="scroll-hint" href="#work" aria-label="向下滚动"></a>
-</section>
+  <section id="recent" hidden>
+    <div class="label"><h2>最近拍的</h2><span class="hand muted">往右滑 →</span></div>
+    <div class="strip" id="strip"></div>
+  </section>
 
-<section class="section" id="work">
-  <div class="section-head">
-    <p class="eyebrow">Portfolio</p>
-    <h2>精选作品</h2>
-  </div>
-  <div class="filters" id="filters" role="tablist"></div>
-  <div class="gallery" id="gallery"></div>
-</section>
-
-<section class="section about" id="about">
-  <div class="about-img">
-    <img src="https://picsum.photos/id/64/800/1000" alt="摄影师肖像" loading="lazy">
-  </div>
-  <div class="about-text">
-    <p class="eyebrow">About</p>
-    <h2>你好，我是杨</h2>
-    <p>一名常驻上海的独立摄影师。十年来，我带着相机走过二十多个国家，相信最好的照片往往发生在不被打扰的时刻——一束斜射的光、一次不经意的回眸。</p>
-    <p>我偏爱自然光与胶片质感的色调，拍摄时尽量少摆拍，多观察，让被摄者以最舒服的状态出现在画面里。</p>
-    <ul class="stats">
-      <li><strong>10+</strong><span>年拍摄经验</span></li>
-      <li><strong>300+</strong><span>位合作客户</span></li>
-      <li><strong>24</strong><span>个国家足迹</span></li>
-    </ul>
-  </div>
-</section>
-
-<section class="section" id="services">
-  <div class="section-head">
-    <p class="eyebrow">Services</p>
-    <h2>拍摄服务</h2>
-  </div>
-  <div class="cards">
-    <article class="card">
-      <h3>个人写真</h3>
-      <p class="price">¥1,800 <small>起</small></p>
-      <ul>
-        <li>2 小时外景或室内拍摄</li>
-        <li>精修 20 张</li>
-        <li>全部底片交付</li>
-      </ul>
-    </article>
-    <article class="card featured">
-      <span class="tag">最受欢迎</span>
-      <h3>婚礼纪实</h3>
-      <p class="price">¥8,800 <small>起</small></p>
-      <ul>
-        <li>全天跟拍（约 10 小时）</li>
-        <li>精修 120 张 + 精美相册</li>
-        <li>双机位可选</li>
-      </ul>
-    </article>
-    <article class="card">
-      <h3>商业 / 品牌</h3>
-      <p class="price">按项目报价</p>
-      <ul>
-        <li>产品、空间、品牌形象</li>
-        <li>前期策划与布景</li>
-        <li>商用授权</li>
-      </ul>
-    </article>
-  </div>
-</section>
-
-<section class="section contact" id="contact">
-  <div class="section-head">
-    <p class="eyebrow">Contact</p>
-    <h2>一起拍点什么吧</h2>
-    <p class="sub">留下你的想法，我会在 24 小时内回复。</p>
-  </div>
-  <form class="form" id="contactForm">
-    <div class="row">
-      <label>称呼<input name="name" required placeholder="你的名字"></label>
-      <label>邮箱<input name="email" type="email" required placeholder="you@example.com"></label>
+  <section class="sec" id="album">
+    <div class="sec-head">
+      <h2>相册<span class="hand">album</span></h2>
+      <div class="tabs" id="tabs" aria-label="按组筛选"></div>
     </div>
-    <label>拍摄类型
-      <select name="type">
-        <option>个人写真</option>
-        <option>婚礼纪实</option>
-        <option>商业 / 品牌</option>
-        <option>其他</option>
-      </select>
-    </label>
-    <label>想法与日期<textarea name="message" rows="5" required placeholder="说说你想要的风格、时间和地点……"></textarea></label>
-    <button class="btn solid" type="submit">发送</button>
-    <p class="form-note" id="formNote" aria-live="polite"></p>
-  </form>
-  <div class="socials">
-    <a href="mailto:hello@example.com">hello@example.com</a>
-    <a href="#" aria-label="Instagram">Instagram</a>
-    <a href="#" aria-label="小红书">小红书</a>
-    <a href="#" aria-label="微博">微博</a>
+    <div class="album" id="albumGrid"><p class="muted">照片加载中…</p></div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="about">
+      <figure class="polaroid">
+        <img src="photos/001.jpg" alt="阿树拍的照片" loading="lazy">
+        <span class="hand">最近的一张 · 长沙</span>
+      </figure>
+      <div class="about-text">
+        <h2>关于我</h2>
+        <p>住在长沙，平时拿着相机到处走走。喜欢自然光，喜欢树荫下斑驳的光，也喜欢人在放松时候的样子。</p>
+        <p>拍人像不太会摆姿势，通常就是边聊天边拍。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div>
+      <h2>想一起拍点照片？</h2>
+      <p>朋友约拍、毕业照、日常写真都可以，长沙周边周末有空。加微信聊聊就好。</p>
+    </div>
+    <!-- 联系方式：把“待填写”换成真实的账号；不想公开的那一行整行删掉 -->
+    <div class="ids">
+      <div class="id"><span>微信</span><code id="wx">待填写</code><button type="button" data-copy="wx">复制</button></div>
+      <div class="id"><span>小红书</span><code id="xhs">待填写</code><button type="button" data-copy="xhs">复制</button></div>
+    </div>
+  </section>
+
+  <footer><span>© <span id="year">2026</span> 阿树 · 照片版权归作者所有</span><span class="hand">thanks for looking :)</span></footer>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="查看照片">
+  <div class="lb-bar">
+    <span id="lbCount"></span>
+    <div>
+      <button type="button" id="lbPrev" aria-label="上一张">←</button>
+      <button type="button" id="lbNext" aria-label="下一张">→</button>
+      <button type="button" id="lbClose">关闭</button>
+    </div>
   </div>
-</section>
-
-<footer class="footer">© <span id="year"></span> YANG STUDIO · 保留所有权利</footer>
-
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
-  <button class="lb-nav prev" id="lbPrev" aria-label="上一张">‹</button>
-  <figure>
-    <img id="lbImg" alt="">
-    <figcaption id="lbCap"></figcaption>
-  </figure>
-  <button class="lb-nav next" id="lbNext" aria-label="下一张">›</button>
+  <div class="lb-stage"><div class="ph"><img id="lbImg" alt=""><span class="stamp" id="lbStamp"></span></div></div>
+  <div class="lb-cap"><span class="hand" id="lbTitle"></span><span class="muted" id="lbMeta"></span></div>
 </div>
 
 <script src="app.js"></script>

@@ -1,6 +1,6 @@
 // Offline support: the app and the dictionary are stored on the device after the first visit.
 // Bump SHELL when app files change; the dictionary has its own cache so updates don't re-download it.
-const SHELL = "reading-words-shell-v1";
+const SHELL = "reading-words-shell-v2";
 const DICT = "reading-words-dict-v1";
 const SHELL_FILES = [
   "./", "index.html", "app.js", "manifest.webmanifest",
@@ -36,6 +36,7 @@ self.addEventListener("fetch", event => {
   const req = event.request;
   const url = new URL(req.url);
   if (req.method !== "GET" || url.origin !== location.origin) return;
+  if (url.pathname.includes("/photography/")) return; // separate site, not part of the app
 
   if (url.pathname.includes("/dict/")) {
     // dictionary: cache first, it never changes

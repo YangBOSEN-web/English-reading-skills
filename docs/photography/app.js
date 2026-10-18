@@ -1,5 +1,5 @@
 // Photos come from photos.json (written by add_photos.py) — no need to edit this file to add photos.
-const STRIP_MIN = 8; // show the "最近拍的" strip once there are this many photos
+const STRIP_MIN = 16; // show the "最近拍的" strip once there are this many photos
 
 const strip = document.getElementById("strip");
 const grid = document.getElementById("albumGrid");

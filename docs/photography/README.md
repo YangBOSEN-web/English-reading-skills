@@ -35,6 +35,6 @@ python3 add_photos.py ~/Downloads/新照片/*.jpg --group 林间白衣 --place �
 
 - 名字「张昊天」：页面标题、左上角、开头的打招呼、页脚
 - 自我介绍：「关于我」那一段
-- 关于我的照片：`<img src="photos/001.jpg">` 换成自己的照片
+- 关于我的照片：`photos/about.jpg`，直接替换这个文件即可
 - 联系方式：把「待填写」换成真实的微信号、小红书号；不想公开的那一行整行删掉
 - 颜色：`style.css` 顶部的 `:root`
